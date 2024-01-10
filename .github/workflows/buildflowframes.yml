@@ -66,11 +66,8 @@ jobs:
       run: |
         echo "time=$(date -u "+%Y%m%d%H%M")" >> $GITHUB_OUTPUT
 
-    - name: Upload binaries to release
-      uses: svenstaro/upload-release-action@2.5.0
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: D:\a\flowframes\flowframes\Build\FF-9999-Slim.7z
-        tag: ff-${{ steps.get-timestamp.outputs.time }}
-        overwrite: true
-        prerelease: true
+        name: ff-slim
+        path: D:\a\flowframes\flowframes\Build\FF-9999-Slim.7z
