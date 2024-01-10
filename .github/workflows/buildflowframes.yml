@@ -6,6 +6,8 @@ on:
 
 jobs:
   release:
+    env:
+      GH_TOKEN: ${{ github.token }}
     name: Create Release
     runs-on: ubuntu-latest
     permissions: write-all
