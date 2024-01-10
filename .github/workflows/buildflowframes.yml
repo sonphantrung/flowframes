@@ -56,7 +56,7 @@ jobs:
         echo "9999" >> "FlowframesApp9999/FlowframesData/ver.ini"
         cp Flowframes.exe "FlowframesApp9999"
         cd ../../../../Build
-        7za.exe a FF-9999-Slim.7z -m0=flzma2 -mx5 "..\Code\bin\x64\Release\FlowframesApp9999"
+        ./7za.exe a FF-9999-Slim.7z -m0=flzma2 -mx5 "..\Code\bin\x64\Release\FlowframesApp9999"
         cd ..
 
     - name: Get build timestamp
