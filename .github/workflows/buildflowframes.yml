@@ -69,4 +69,4 @@ jobs:
     - name: Release
       run: |
         pwd
-        gh release upload ff-${{ steps.get-timestamp.outputs.time }} $PWD/Build/FF-9999-Slim.7z
+        gh release upload ff-${{ steps.get-timestamp.outputs.time }} D:\a\flowframes\flowframes\Build\FF-9999-Slim.7z
