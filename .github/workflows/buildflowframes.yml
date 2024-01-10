@@ -57,6 +57,7 @@ jobs:
         cp Flowframes.exe "FlowframesApp9999"
         cd ../../../../Build
         ./7za.exe a FF-9999-Slim.7z -m0=flzma2 -mx5 "..\Code\bin\x64\Release\FlowframesApp9999"
+        ls
         cd ..
 
     - name: Get build timestamp
@@ -65,7 +66,6 @@ jobs:
         echo "time=$(date -u "+%Y%m%d%H%M")" >> $GITHUB_OUTPUT
 
     - name: Release
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: ff-${{ steps.get-timestamp.outputs.time }}
-        files: .\Build\FF-9999-Slim.7z
+      run: |
+        pwd
+        gh release upload ff-${{ steps.get-timestamp.outputs.time }} $PWD/Build/FF-9999-Slim.7z
