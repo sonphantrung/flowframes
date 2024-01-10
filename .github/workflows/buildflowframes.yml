@@ -5,7 +5,26 @@ on:
     branches: [ "gh-releases" ]
 
 jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    permissions: write-all
+    outputs:
+      timestamp: ${{ steps.get-timestamp.outputs.time }}
+    steps:
+      - name: Get build timestamp
+        id: get-timestamp
+        run: |
+          echo "time=$(/bin/date -u "+%Y-%m-%d-%H%M")" >> $GITHUB_OUTPUT
+      - name: Generate environmental variables
+        id: generate_env_vars
+        run: |
+          echo "tag_name=ff-${{ steps.get-timestamp.outputs.time }}" >> $GITHUB_OUTPUT
+      - uses: actions/checkout@v3
+      - run: |
+          gh release create ${{ steps.generate_env_vars.outputs.tag_name }} --generate-notes --prerelease --title "release"
   build:
+    needs: release
     strategy:
       matrix:
         configuration: [Release]
@@ -61,11 +80,6 @@ jobs:
         ls
         cd ..
 
-    - name: Get build timestamp
-      id: get-timestamp
-      run: |
-        echo "time=$(date -u "+%Y%m%d%H%M")" >> $GITHUB_OUTPUT
-
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
@@ -74,6 +88,5 @@ jobs:
 
     - name: Release
       run: |
-        gh release create ff-${{steps.get-timestamp.outputs.time}} --generate-notes --prerelease --title "release"
-        gh release upload ff-${{steps.get-timestamp.outputs.time}} D:\a\flowframes\flowframes\Build\FF-9999-Slim.7z
+        gh release upload ff-${{needs.release.outputs.timestamp}} D:\a\flowframes\flowframes\Build\FF-9999-Slim.7z
         
