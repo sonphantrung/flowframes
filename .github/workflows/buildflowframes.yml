@@ -22,7 +22,7 @@ jobs:
         id: generate_env_vars
         run: |
           echo "tag_name=ff-${{ steps.get-timestamp.outputs.time }}" >> $GITHUB_OUTPUT
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           gh release create ${{ steps.generate_env_vars.outputs.tag_name }} --generate-notes --prerelease --title "release"
   build:
@@ -30,7 +30,8 @@ jobs:
     strategy:
       matrix:
         configuration: [Release]
-    runs-on: windows-latest 
+    permissions: write-all
+    runs-on: windows-latest
     env:
       Solution_Name: Flowframes.sln
       Target: Flowframes
