@@ -33,6 +33,7 @@ jobs:
     - name: Build Flowframes
       run: |
         cd Code/
+        dotnet add package Fody --version 6.4.0
         msbuild -t:restore
         msbuild $env:Solution_Name /p:Configuration=$env:Configuration /p:Platform=$env:Platform -target:$env:Target
         cd ..
