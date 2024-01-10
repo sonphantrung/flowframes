@@ -56,5 +56,16 @@ jobs:
         echo "9999" >> "FlowframesApp9999/FlowframesData/ver.ini"
         cp Flowframes.exe "FlowframesApp9999"
         cd ../../../../Build
-        cp "../pkgs/py-amp" "..\Code\bin\x64\Release\FlowframesApp9999\FlowframesData\pkgs\py-amp"
-        7za.exe a FF-9999-Full-RTX3000.7z -m0=flzma2 -mx7 "..\Code\bin\x64\Release\FlowframesApp9999"
+        7za.exe a FF-9999-Slim.7z -m0=flzma2 -mx5 "..\Code\bin\x64\Release\FlowframesApp9999"
+        cd ..
+
+    - name: Get build timestamp
+      id: get-timestamp
+      run: |
+        echo "time=$(/bin/date -u "+%Y%m%d%H%M")" >> $GITHUB_OUTPUT
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ff-${{ steps.get-timestamp.outputs.time }}
+        files: .\Build\FF-9999-Slim.7z
