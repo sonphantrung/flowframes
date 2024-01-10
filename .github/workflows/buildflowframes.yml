@@ -46,16 +46,16 @@ jobs:
         mkdir "FlowframesApp9999"
         mkdir "FlowframesApp9999/FlowframesData"
         mkdir "FlowframesApp9999/FlowframesData/pkgs"
-        cp "../../../../pkgs/av" "FlowframesApp9999/FlowframesData\pkgs\av"
-        cp ../../../../pkgs/dain-ncnn FlowframesApp9999/FlowframesData\pkgs\dain-ncnn
-        cp "../../../../pkgs/licenses" "FlowframesApp9999/FlowframesData\pkgs\licenses"
-        cp "../../../../pkgs/rife-cuda" "FlowframesApp9999/FlowframesData\pkgs\rife-cuda"
-        cp "../../../../pkgs/rife-ncnn" "FlowframesApp9999/FlowframesData\pkgs\rife-ncnn"
-        cp "../../../../pkgs/flavr-cuda" "FlowframesApp9999/FlowframesData\pkgs\flavr-cuda"
-        cp "../../../../pkgs/xvfi-cuda" "FlowframesApp9999/FlowframesData\pkgs\xvfi-cuda"
-        cp "../../../../pkgs/rife-ncnn-vs" "FlowframesApp9999/FlowframesData\pkgs\rife-ncnn-vs"
+        cp -r "../../../../pkgs/av" "FlowframesApp9999/FlowframesData\pkgs\av"
+        cp -r ../../../../pkgs/dain-ncnn FlowframesApp9999/FlowframesData\pkgs\dain-ncnn
+        cp -r "../../../../pkgs/licenses" "FlowframesApp9999/FlowframesData\pkgs\licenses"
+        cp -r "../../../../pkgs/rife-cuda" "FlowframesApp9999/FlowframesData\pkgs\rife-cuda"
+        cp -r "../../../../pkgs/rife-ncnn" "FlowframesApp9999/FlowframesData\pkgs\rife-ncnn"
+        cp -r "../../../../pkgs/flavr-cuda" "FlowframesApp9999/FlowframesData\pkgs\flavr-cuda"
+        cp -r "../../../../pkgs/xvfi-cuda" "FlowframesApp9999/FlowframesData\pkgs\xvfi-cuda"
+        cp -r "../../../../pkgs/rife-ncnn-vs" "FlowframesApp9999/FlowframesData\pkgs\rife-ncnn-vs"
         echo "9999" >> "FlowframesApp9999/FlowframesData/ver.ini"
-        cp Flowframes.exe "FlowframesApp9999"
+        cp -r Flowframes.exe "FlowframesApp9999"
         cd ../../../../Build
         ./7za.exe a FF-9999-Slim.7z -m0=flzma2 -mx5 "..\Code\bin\x64\Release\FlowframesApp9999"
         ls
@@ -71,3 +71,9 @@ jobs:
       with:
         name: ff-slim
         path: D:\a\flowframes\flowframes\Build\FF-9999-Slim.7z
+
+    - name: Release
+      run: |
+        gh release create ff-${{steps.get-timestamp.outputs.time}} --generate-notes --prerelease --title "release"
+        gh release upload ff-${{steps.get-timestamp.outputs.time}} D:\a\flowframes\flowframes\Build\FF-9999-Slim.7z
+        
