@@ -62,7 +62,7 @@ jobs:
     - name: Get build timestamp
       id: get-timestamp
       run: |
-        echo "time=$(/bin/date -u "+%Y%m%d%H%M")" >> $GITHUB_OUTPUT
+        echo "time=$(date -u "+%Y%m%d%H%M")" >> $GITHUB_OUTPUT
 
     - name: Release
       uses: softprops/action-gh-release@v1
